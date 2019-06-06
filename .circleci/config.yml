@@ -34,8 +34,7 @@ jobs:
       - checkout
       - run: echo "Second parallel job"
       - run: cat ~/output/text.txt > $BASH_ENV
-      - run: echo $ENVVAR
-      - run: echo $ENVVARTWO
+      - run: echo $FIRSTCONTEXTVAR
       - run: echo $MYNEWVAR
       
       
@@ -45,6 +44,6 @@ workflows:
     jobs:
       - build
       - test:
-          context: first-content
+          context: first-context
           requires:
             - build
