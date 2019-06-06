@@ -17,23 +17,21 @@ jobs:
           name: "Save variables"
           command: |
             cat $BASH_ENV
-            pwd
             mkdir output
-            ls -la
-            cat $BASH_ENV > output/file.txt
+            cat $BASH_ENV > output/file
       - persist_to_workspace:
-          root: ~/output
+          root: output
           paths: 
-            file.txt
+            file
   test:
     docker:
       - image: circleci/ruby:2.4.1
     steps:
       - attach_workspace:
-        at: ~/output
+        at: output
       - checkout
       - run: echo "Second parallel job"
-      - run: cat ~/output/text.txt > $BASH_ENV
+      - run: cat output/text > $BASH_ENV
       - run: echo $FIRSTCONTEXTVAR
       - run: echo $MYNEWVAR
       
