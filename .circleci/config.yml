@@ -1,0 +1,50 @@
+#parallel jobs and one additional job for second build
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - run: 
+          name: "Declare the variable"
+          command: |
+            echo 'export MYNEWVAR="Value of new var in bash_env"' >> $BASH_ENV
+            source $BASH_ENV
+            echo $MYNEWVAR
+      - run: echo $MYNEWVAR
+      - run:
+          name: "Save variables"
+          command: |
+            cat $BASH_ENV
+            pwd
+            mkdir output
+            ls -la
+            cat $BASH_ENV > output/file.txt
+      - persist_to_workspace:
+          root: ~/output
+          paths: 
+            file.txt
+  test:
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - attach_workspace:
+        at: ~/output
+      - checkout
+      - run: echo "Second parallel job"
+      - run: cat ~/output/text.txt > $BASH_ENV
+      - run: echo $ENVVAR
+      - run: echo $ENVVARTWO
+      - run: echo $MYNEWVAR
+      
+      
+workflows:
+  version: 2
+  "Context test":
+    jobs:
+      - build
+      - test:
+          context: first-content
+          requires:
+            - build
