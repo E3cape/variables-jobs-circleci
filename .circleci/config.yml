@@ -28,8 +28,7 @@ jobs:
       - image: circleci/ruby:2.4.1
     steps:
       - attach_workspace:
-        at: output
-      - checkout
+          at: output
       - run: echo "Second parallel job"
       - run: cat output/text > $BASH_ENV
       - run: echo $FIRSTCONTEXTVAR
