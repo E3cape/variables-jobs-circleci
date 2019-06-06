@@ -29,8 +29,7 @@ jobs:
     steps:
       - attach_workspace:
           at: output
-      - run: echo "Second parallel job"
-      - run: cat output/text > $BASH_ENV
+      - run: cat output/file > $BASH_ENV
       - run: echo $FIRSTCONTEXTVAR
       - run: echo $MYNEWVAR
       
