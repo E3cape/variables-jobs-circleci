@@ -1,5 +1,3 @@
-#parallel jobs and one additional job for second build
-
 version: 2
 jobs:
   first_job:
