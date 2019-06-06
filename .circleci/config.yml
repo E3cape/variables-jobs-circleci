@@ -39,7 +39,7 @@ jobs:
       
 workflows:
   version: 2
-  "Context test":
+  "Variables test":
     jobs:
       - first_job
       - second_job:
